@@ -5,11 +5,11 @@
 class motor {
 private:
   uint8_t a1, a2, b1, b2, pwm1, pwm2;
-  int16_t pwmL, pwmR;
-  uint8_t baseSpeedFr = 200;
-  uint8_t baseSpeedBk = 150;
-  int8_t correctionLeft = 0;
-  int8_t correctionRight = 0;
+  uint8_t pwmL, pwmR;
+  uint8_t baseSpeedFr = 100; 
+  uint8_t baseSpeedBk = 50;
+  int16_t correctionLeft = 0;
+  int16_t correctionRight = 0;
 
 
 
@@ -33,7 +33,7 @@ public:
     pinMode(pwm2, OUTPUT);
   }
 
-  void forward(int8_t &output, float &error) {
+  void forward(int16_t &output, float &error) {
     digitalWrite(a1, LOW);
     digitalWrite(a2, HIGH);
     digitalWrite(b1, LOW);  
@@ -41,8 +41,8 @@ public:
       correctionLeft = -(output);
       correctionRight = output;
     
-    analogWrite(pwm1, (baseSpeedFr + correctionLeft));
-    analogWrite(pwm2, (baseSpeedFr + correctionRight));
+    analogWrite(pwm1, constrain((baseSpeedFr + correctionLeft),0,255));
+    analogWrite(pwm2, constrain(baseSpeedFr + correctionRight,0,255));
     Serial.print(error); // its actually printing the angle since the target angle for forward movenent is 0.00
     Serial.print("\t");
     Serial.print(correctionLeft);

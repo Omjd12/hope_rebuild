@@ -4,9 +4,9 @@
 class pid {
   private:
   float derivative, integral, previousError, target;
-  int8_t output;
+  int16_t output;
   float kp, ki, kd;
-  long dt;
+  u_long dt;
 
   void setConstant(float p, float i, float d) {
     if (p < 0 || i < 0 || d < 0) {
@@ -33,12 +33,12 @@ public:
   }*/
   
   int16_t compute(float &error, unsigned long &dt) {
-    derivative = error - previousError;
-    integral += error;
+    derivative = (error - previousError)*1000000/dt;
+    integral += (error * dt)/1000000;
     previousError = error;
 
-    output = kp * error + ki * integral + (kd * derivative * 1000000) / (float)dt;  // here we recieved the value of dt in microseconds so multiply with 1000000
-    return constrain(output, -55, 55);
+    output = int16_t(kp * error) + ki * integral + kd * derivative;
+    return constrain(output, -155, 155);
   }
 };
 

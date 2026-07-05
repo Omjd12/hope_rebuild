@@ -5,6 +5,7 @@
 #include <I2Cdev.h>
 #include <Wire.h>
 
+
 class mpu {
 private:
   MPU6050 mpu;  // initialize MPU6050
@@ -16,6 +17,8 @@ private:
   bool dmpReady = false;
   float yaw = 0.0;
   float YawOffset = 0.0;
+  //float angular_vel= 0.0;
+  bool readPacket = false;
 
 public:
   // method to initialize mpu
@@ -43,18 +46,19 @@ public:
         delay(1);
       }
       dt = millis() - t;
-      rate = sum/(dt);
+      rate = sum/(dt); 
       Serial.println(rate);
       sum = 0.0; 
     }*/
-    for(int i = 0; i<7000; i++){
+    Serial.println("caliberating");
+    for(int i = 0; i<16000; i++){
       check();
       update();
-      pass;
+      pass;  // here we are warming up the DMP
     }
     for(int i = 0; i<1000; i++){
       check();
-      update();
+      update(); // GETTING THE ACTUAL DATA FOR CALIBERATION
       sum += getYaw(); 
     }
     YawOffset = sum/1000;
@@ -77,15 +81,17 @@ public:
   // this method can be used frequently
   void update() {
     if (!dmpReady) return;
-    else if (mpu.dmpGetCurrentFIFOPacket(fifoBuffer)) {
+    else if ( readPacket ) {
       mpu.dmpGetQuaternion(&q, fifoBuffer);
       mpu.dmpGetGravity(&gravity, &q);
       mpu.dmpGetYawPitchRoll(ypr, &q, &gravity);
       yaw = ypr[0] * 180 / M_PI;
+      //angular_vel = mpu.dmpGetGyro();
     }
   }
   bool check() {
-    if (!mpu.dmpGetCurrentFIFOPacket(fifoBuffer)) {
+     readPacket = mpu.dmpGetCurrentFIFOPacket(fifoBuffer);
+    if (readPacket) {
       return true;
     } else return false;
   }
