@@ -40,6 +40,10 @@ public:
     output = int16_t(kp * error) + ki * integral + kd * derivative;
     return constrain(output, -155, 155);
   }
+
+  long predict(float omega, float target_angle){
+    return long((target_angle*0.8)/omega);
+  }
 };
 
 #endif
