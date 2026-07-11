@@ -64,5 +64,16 @@ public:
     Serial.print("\t");
     Serial.println(correctionRight);
   }
+
+
+  void left(){
+    digitalWrite(a1, HIGH);
+    digitalWrite(a2, LOW);
+    digitalWrite(b1, LOW);  
+    digitalWrite(b2, HIGH);
+
+    analogWrite(pwm1, baseSpeedFr);
+    analogWrite(pwm2, baseSpeedFr);
+  }
 };
 #endif
