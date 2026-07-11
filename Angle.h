@@ -19,6 +19,11 @@ private:
   float YawOffset = 0.0;
   //float angular_vel= 0.0;
   bool readPacket = false;
+  unsigned long time;
+  int16_t gx, gz, gy;
+  float omega;
+  float omegaOffset = 0.0;
+  
 
 public:
   // method to initialize mpu
@@ -62,6 +67,11 @@ public:
       sum += getYaw(); 
     }
     YawOffset = sum/1000;
+    for(int i =0; i<2000; i++){
+      mpu.getRotation(&gx, &gy, &gz);
+      sum += float(gz);
+    }
+    omegaOffset = (sum/2000.0)/131.0;
   }
   // method to initialize digital motion processing (DMP)
   bool dmpInit() {
@@ -100,6 +110,12 @@ public:
   }
   void zeroYaw() {
     YawOffset = this->yaw;
+  }
+
+  float get_angular_vel(){
+    mpu.getRotation(&gx, &gy, &gz);
+    omega = float(gz/131.0);
+    return omega - omegaOffset;
   }
 };
 #endif
