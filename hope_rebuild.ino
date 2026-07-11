@@ -62,7 +62,7 @@ void loop() {
     lastMeasured = now;
   } else pass;
 
-    a.forward(output, error);
+    a.forward(output,error)
     if(server_status){
       server.send(angle, now);
     }
