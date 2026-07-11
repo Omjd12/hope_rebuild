@@ -75,5 +75,21 @@ public:
     analogWrite(pwm1, baseSpeedFr);
     analogWrite(pwm2, baseSpeedFr);
   }
+
+  void right(){
+    digitalWrite(a1, LOW);
+    digitalWrite(a2, HIGH);
+    digitalWrite(b1, HIGH);  
+    digitalWrite(b2, LOW);
+
+    analogWrite(pwm1, baseSpeedFr);
+    analogWrite(pwm2, baseSpeedFr);
+  }
+
+  void turn(int16_t alpha, int16_t theta){
+      if(alpha > theta)
+        left();
+      else right();
+  }
 };
 #endif
