@@ -9,7 +9,7 @@ pid p(40, 0., 1.3);
 motor a(26, 27, 25, 33);
 tcp server("narzo 50A", "123456789");
 unsigned long dt = 0;
-float target = 0.0;
+float target = 90.0;
 float angle;
 unsigned long now = 0;
 unsigned long lastMeasured = 0;
@@ -35,8 +35,7 @@ void setup() {
     if (server_status) {
       server.sendText("terminated");
     }
-    while (1)
-      ;
+    while (1);
   }
   if (iniT) {
     dmpInit = m.dmpInit();  // initializing dmp
