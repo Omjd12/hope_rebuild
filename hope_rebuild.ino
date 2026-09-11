@@ -7,7 +7,7 @@ mpu m;
 bool server_status = true;
 pid p(40, 0., 1.3);
 motor a(26, 27, 25, 33);
-tcp server("narzo 50A", "123456789");
+tcp server("your_ssid", "your_pass");
 unsigned long dt = 0;
 float target = 90.0;
 float angle;
