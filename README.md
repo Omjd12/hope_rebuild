@@ -162,7 +162,6 @@ flowchart LR
 | `TCP.h` | `tcp` class — connects to Wi-Fi and runs a `WiFiServer` on port `1234` that streams `angle,time` pairs to any connected client |
 | `Web_controller.h` | Web-based control interface/handlers for driving the robot over Wi-Fi |
 | `plot.py` | PyQtGraph client that connects to the ESP32's TCP server and plots live yaw vs. time for debugging/tuning |
-| `.theia/` | Eclipse Theia IDE workspace config |
 
 ## How it works
 
@@ -200,4 +199,4 @@ Adjust these and re-flash to tune heading-hold/turning behavior. The `target` va
 ## Status / notes
 
 - This is an active robotics project; some code paths (e.g. `backward()`) are present but not yet wired into the main loop.
-- No license file is currently included.
+
