@@ -1,6 +1,6 @@
  # hope_rebuild
 
-A ground-up rewrite of **Hope**, a self-balancing / heading-controlled differential-drive robot built on ESP32. This version restructures the original Hope firmware into clean, reusable C++ classes — MPU6050 fusion, PID heading control, motor driving, and Wi-Fi/TCP telemetry — and adds a Python-side live plotter for tuning.
+A ground-up rewrite of **Hope**, a heading-controlled differential-drive robot built on ESP32. This version restructures the original Hope firmware into clean, reusable C++ classes — MPU6050 fusion, PID heading control, motor driving, and Wi-Fi/TCP telemetry — and adds a Python-side live plotter for tuning.
 
 ## Overview
 
@@ -15,7 +15,7 @@ The robot uses an MPU6050 (via its onboard DMP) to estimate yaw, and a PID contr
 | Motor driver | **TB6612FNG** dual H-bridge — 2-channel, up to ~1.2 A continuous/channel, 2.5–13.5 V motor supply, separate logic (VCC) and motor (VM) rails, active-low standby (STBY) |
 | Motors | 2× DC gear motors (differential drive) |
 | Chassis | 2-wheel differential-drive base + caster |
-| Power | 7.4V pack (2S Li-ion/LiPo) → TB6612FNG motor rail (VM) directly; 7805 linear regulator steps 7.4V down to 5V for ESP32 + logic |
+| Power | 7.4V pack (2S Li-ion) → TB6612FNG motor rail (VM) directly; 7805 linear regulator steps 7.4V down to 5V for ESP32 + logic |
 | Voltage regulator | 7805 linear regulator, 7.4V → 5V, with 100µF electrolytic + 10µF ceramic caps on **both** the 7.4V input and 5V output sides |
 
 ### Power regulation
